@@ -90,14 +90,32 @@ break;}
 while(currentNode->current !=NULL){
 if(currentNode->current->k == k){
 cout<<"Record already in file cann't insert :"<<k;
-return 0;
+return;
 }
 else
 currentNode->current=currentNode->current->next;
 
 }
-if(currentNode->total_ele < p ){
-
+currentNode->current=currentNode->head;
+if((currentNode->total_ele < p) && (currentNode->total_ele !=0) ){
+while(k < currentNode->current->k )
+currentNode->current=currentNode->current->next;
+node* temp=currentNode->current;
+node* new_node;
+new_node->k=k;
+new_node->next=temp;
+new_node->previous=currentNode->current->previous;
+currentNode->current->previous->next=new_node;
+} 
+if((currentNode->total_ele < p) && (currentNode->total_ele ==0) ){
+while(k < currentNode->current->k )
+currentNode->current=currentNode->current->next;
+node* temp=currentNode->current;
+node* new_node;
+new_node->k=k;
+new_node->next=temp;
+new_node->previous=currentNode->current->previous;
+currentNode->current->previous->next=new_node;
 } 
 }
 
