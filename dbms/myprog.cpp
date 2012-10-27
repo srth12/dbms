@@ -18,6 +18,7 @@ struct mnode{
 node * head;
 node * tail;
 node * current;
+mnode * next;
 bool is_leaf;
 int total_ele;
 bool root;
@@ -55,6 +56,7 @@ struct mnode * ptr;
 ptr->head=NULL;
 ptr->tail=NULL;
 ptr->current=NULL;
+ptr->next=NULL;
 struct node * p;
 p->child=NULL;
 p->next=NULL;
@@ -97,7 +99,7 @@ currentNode->current=currentNode->current->next;
 
 }
 currentNode->current=currentNode->head;
-if((currentNode->total_ele < p) && (currentNode->total_ele !=0) ){
+if(currentNode->total_ele < p) {   //check modification may need for root element check ,ie, wheter is initial element.
 while(k < currentNode->current->k )
 currentNode->current=currentNode->current->next;
 node* temp=currentNode->current;
@@ -106,18 +108,55 @@ new_node->k=k;
 new_node->next=temp;
 new_node->previous=currentNode->current->previous;
 currentNode->current->previous->next=new_node;
-} 
-if((currentNode->total_ele < p) && (currentNode->total_ele ==0) ){
-while(k < currentNode->current->k )
-currentNode->current=currentNode->current->next;
-node* temp=currentNode->current;
-node* new_node;
-new_node->k=k;
-new_node->next=temp;
-new_node->previous=currentNode->current->previous;
-currentNode->current->previous->next=new_node;
-} 
 }
+else  //if leaf node is full
+{mnode* tempe;
+
+while(k < currentNode->current->k )
+currentNode->current=currentNode->current->next;
+node* temp=currentNode->current;
+
+tempe=currentNode;
+
+mnode* new_one;
+new_one->next=currentNode->next;
+int j=0;
+if(currentNode->total_ele % 2)
+{j=((j+1)/2)+1;}
+else{j=(j+1)/2;}
+int i=0;
+currentNode->head=tempe->head;
+currentNode->current=tempe->head;
+currentNode->total_ele=j;
+currentNode->is_leaf=true;
+node* y;y=currentNode->head;
+while(++i<j){
+y=y->next;
+
+}
+k=y->k;
+currentNode->tail=y;
+currentNode->next=new_one;
+new_one->head=y->next;
+new_one->tail=tempe->tail;
+new_one->current=new_one->head;
+new_one->is_leaf=true;
+new_one->total_ele=tempe->total_ele - j;
+new_one->root=false;
+
+// give new_one and new k value to parent node. How to do? (from 'finished <- false in text)
+
+if(stk->current==0){ //rot node need to create
+
+
+
+}
+
+}
+
+
+}
+
 
 
 
