@@ -4,10 +4,11 @@
 using namespace std;
 
 int p;
-
+struct mnode;
 struct node{
 node *next;
 node *parent;
+mnode* child;
 int k;
 
 
@@ -15,7 +16,6 @@ int k;
 };
 struct mnode{
 node * head;
-mnode *child;
 node * tail;
 bool is_leaf;
 int total_ele;
@@ -53,8 +53,8 @@ btree(){
 struct mnode * ptr;
 ptr->head=NULL;
 ptr->tail=NULL;
-ptr->child=NULL;
 struct node * p;
+p->child=NULL;
 p->next=NULL;
 p->parent=NULL;
 }
@@ -67,7 +67,13 @@ while(!currentNode->is_leaf && (currentNode->head!=NULL)){
 s.push(currentNode);
 q=currentNode->total_ele;
 if(k<=currentNode->head->k)
-currentNode=currentNode->child;
+currentNode=currentNode->head->child;
+else if(k>currentNode->tail->k)
+{
+currentNode=currentNode->tail->child;
+
+}
+
 }
 
 }
