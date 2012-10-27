@@ -28,7 +28,9 @@ public:
 stack(){
 current=0;
 }
-
+void clrstk(){
+current=0;
+}
 void push(node* ptr){
 if(current==100)
 cout<<"Stack overflow";
@@ -51,11 +53,19 @@ btree(){
 struct mnode * ptr;
 ptr->head=NULL;
 ptr->tail=NULL;
+struct node * p;
+p->child=NULL;
+p->next=NULL;
+p->parent=NULL;
 }
 };
 
-void insert(){
+void insert(int k,mnode* rootNode){
+mnode* currentNode=rootNode;
+while(!currentNode->is_leaf){
 
+
+}
 
 }
 
