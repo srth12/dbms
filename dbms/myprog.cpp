@@ -30,6 +30,12 @@ public:
 stack(){
 current=0;
 }
+
+bool isempty(){
+if(current==0)
+return true;
+else false;
+}
 void clrstk(){
 current=0;
 }
@@ -67,9 +73,9 @@ p->previous=NULL;
 void insert(int k,mnode* rootNode){
 mnode* currentNode=rootNode;
 currentNode->current=currentNode->head;
-stack s;int q=0;
-while( (! currentNode->is_leaf) && (currentNode->head !=NULL)){
-s.push(currentNode);
+int q=0;
+while( ! currentNode->is_leaf ){
+stk.push(currentNode);
 q=currentNode->total_ele;
 if(k<=currentNode->head->k)
 currentNode=currentNode->head->child;
@@ -146,8 +152,21 @@ new_one->root=false;
 
 // give new_one and new k value to parent node. How to do? (from 'finished <- false in text)
 
-if(stk->current==0){ //rot node need to create
+if(stk.isempty()){ //rot node need to create
+rootNode=new mnode;
+rootNode->root=true;
+rootNode->is_leaf=false;
+rootNode->head->k=k;
+rootNode->head->previous=NULL;
+node* newnode;newnode->k=NULL;newnode->child=new_one;
+rootNode->head->next=newnode;
+rootNode->head->child=currentNode;
+rootNode->tail=rootNode->head;
+rootNode->current=rootNode->head;
 
+}
+else{ //not empty root
+currentNode=stk.pop();
 
 
 }
@@ -163,6 +182,7 @@ if(stk->current==0){ //rot node need to create
 int main(){
 mnode *currentNode;
 currentNode->root=true;
+currentNode->is_leaf=true;
 cout<<"Enter the maximum value of tree pointer\n";
 cin>>p;
 
