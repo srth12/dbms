@@ -6,16 +6,16 @@ using namespace std;
 int p;
 
 struct node{
-node *child;
 node *next;
 node *parent;
-int key_val;
+int k;
 
 
 
 };
 struct mnode{
 node * head;
+mnode *child;
 node * tail;
 bool is_leaf;
 int total_ele;
@@ -23,7 +23,7 @@ bool root;
 };
 
 class stack{
-node* a[100];int current;
+mnode* a[100];int current;
 public:
 stack(){
 current=0;
@@ -31,7 +31,7 @@ current=0;
 void clrstk(){
 current=0;
 }
-void push(node* ptr){
+void push(mnode* ptr){
 if(current==100)
 cout<<"Stack overflow";
 
@@ -39,7 +39,7 @@ a[current]=ptr;
 current++;
 }
 
-node* pop(){
+mnode* pop(){
 if(--current<0)
 cout<<"Stack is empty";
 return a[current];
@@ -53,8 +53,8 @@ btree(){
 struct mnode * ptr;
 ptr->head=NULL;
 ptr->tail=NULL;
+ptr->child=NULL;
 struct node * p;
-p->child=NULL;
 p->next=NULL;
 p->parent=NULL;
 }
@@ -62,9 +62,12 @@ p->parent=NULL;
 
 void insert(int k,mnode* rootNode){
 mnode* currentNode=rootNode;
-while(!currentNode->is_leaf){
-
-
+stack s;int q=0;
+while(!currentNode->is_leaf && (currentNode->head!=NULL)){
+s.push(currentNode);
+q=currentNode->total_ele;
+if(k<=currentNode->head->k)
+currentNode=currentNode->child;
 }
 
 }
