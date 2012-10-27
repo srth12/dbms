@@ -5,18 +5,19 @@ using namespace std;
 
 int p;
 struct mnode;
+
 struct node{
+node *previous;
 node *next;
-node *parent;
 mnode* child;
 int k;
 
-
-
 };
+
 struct mnode{
 node * head;
 node * tail;
+node * current;
 bool is_leaf;
 int total_ele;
 bool root;
@@ -53,17 +54,19 @@ btree(){
 struct mnode * ptr;
 ptr->head=NULL;
 ptr->tail=NULL;
+ptr->current=NULL;
 struct node * p;
 p->child=NULL;
 p->next=NULL;
-p->parent=NULL;
+p->previous=NULL;
 }
 };
 
 void insert(int k,mnode* rootNode){
 mnode* currentNode=rootNode;
+currentNode->current=currentNode->head;
 stack s;int q=0;
-while(!currentNode->is_leaf && (currentNode->head!=NULL)){
+while( (! currentNode->is_leaf) && (currentNode->head !=NULL)){
 s.push(currentNode);
 q=currentNode->total_ele;
 if(k<=currentNode->head->k)
@@ -73,9 +76,29 @@ else if(k>currentNode->tail->k)
 currentNode=currentNode->tail->child;
 
 }
+else{
+while(currentNode->current->next !=currentNode->tail){
+currentNode->current=currentNode->current->next;
+if((currentNode->current->previous->k < k) || ( k <= currentNode->current->k))
+{currentNode=currentNode->current->child;
+break;}
+}
 
 }
 
+}
+while(currentNode->current !=NULL){
+if(currentNode->current->k == k){
+cout<<"Record already in file cann't insert :"<<k;
+return 0;
+}
+else
+currentNode->current=currentNode->current->next;
+
+}
+if(currentNode->total_ele < p ){
+
+} 
 }
 
 
