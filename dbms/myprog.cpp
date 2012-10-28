@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int p;
+int p=0;
 struct mnode;
 
 struct node{
@@ -57,13 +57,17 @@ return a[current];
 
 class btree{
 
-btree(){
+public:
 struct mnode * ptr;
+struct node * p;
+btree(){
+
+
 ptr->head=NULL;
 ptr->tail=NULL;
 ptr->current=NULL;
 ptr->next=NULL;
-struct node * p;
+
 p->child=NULL;
 p->next=NULL;
 p->previous=NULL;
@@ -151,7 +155,7 @@ new_one->total_ele=tempe->total_ele - j;
 new_one->root=false;
 
 // give new_one and new k value to parent node. How to do? (from 'finished <- false in text)
-
+l:
 if(stk.isempty()){ //rot node need to create
 rootNode=new mnode;
 rootNode->root=true;
@@ -167,23 +171,93 @@ rootNode->current=rootNode->head;
 }
 else{ //not empty root
 currentNode=stk.pop();
+if(currentNode->total_ele < p){  //if parent node is not full 
+currentNode->current=currentNode->head;
+while(k < currentNode->current->k )
+currentNode->current=currentNode->current->next;
+node* temp=currentNode->current;
+node* new_node;
+new_node->k=k;
+new_node->next=temp;
+new_node->previous=currentNode->current->previous;
+currentNode->current->previous->next=new_node;
+}
+else{  //if parent is full
+mnode* tempe;
+currentNode->current=currentNode->head;
 
+while(k < currentNode->current->k )
+currentNode->current=currentNode->current->next;
+node* temp=currentNode->current;
+tempe=currentNode;
+tempe->tail=temp->previous;
+node* pnode;
+pnode->child=new_one;
+pnode->k=k;
+pnode->previous=tempe->tail;
+pnode->next=temp;
+tempe->tail->next=pnode;
+tempe->tail=currentNode->tail;
 
+// splitting parent node
+int j=((p+1)/2);
+int i=0;
+currentNode->head=tempe->head;
+currentNode->current=tempe->head;
+currentNode->total_ele=j;
+currentNode->is_leaf=true;
+node* y;y=currentNode->head;
+while(++i<j){
+y=y->next;
+
+}
+k=y->k;mnode * new_one;
+currentNode->tail=y;
+currentNode->next=new_one;
+new_one->head=y->next;
+new_one->tail=tempe->tail;
+new_one->current=new_one->head;
+new_one->total_ele=tempe->total_ele - j;
+goto l;
 }
 
 }
 
-
 }
 
 
+}
+
+void display(mnode* currentNode){
+
+
+}
 
 
 int main(){
-mnode *currentNode;
-currentNode->root=true;
-currentNode->is_leaf=true;
+int n,k;
+btree bt;
+bt.ptr->root=true;
+bt.ptr->is_leaf=true;
 cout<<"Enter the maximum value of tree pointer\n";
 cin>>p;
+/*
+while(true){
+cout<<"\t Enter your choice\n";
+cout<<"1. Insert\n"
+<<"2. Display \n"
+<<"3. Exit \n";
+cin>>n;
+switch(n){
+case 1: 
+cout<<"Enter value to insert\n";
+cin>>k;
+insert(k,bt.ptr);
+break;
+case 2: 
+display(bt.ptr);
+break;
+default: return 0;
+}} */
 
 }
