@@ -688,7 +688,7 @@ node * insert( node * root, int key, int value ) {
 	 * duplicates.
 	 */
 
-	if (find(root, key, false) != NULL)
+	if (find(root, key, false) != NULL)   //check()
 		return root;
 
 	/* Create a new record for the
@@ -702,7 +702,7 @@ node * insert( node * root, int key, int value ) {
 	 */
 
 	if (root == NULL) 
-		return start_new_tree(key, pointer);
+		return start_new_tree(key, pointer);  //create_tree()
 
 
 	/* Case: the tree already exists.
@@ -799,29 +799,17 @@ node * adjust_root(node * root) {
 
 	node * new_root;
 
-	/* Case: nonempty root.
-	 * Key and pointer have already been deleted,
-	 * so nothing to be done.
-	 */
-
+	
 	if (root->num_keys > 0)
 		return root;
 
-	/* Case: empty root. 
-	 */
-
-	// If it has a child, promote 
-	// the first (only) child
-	// as the new root.
-
+	
 	if (!root->is_leaf) {
 		new_root = root->pointers[0];
 		new_root->parent = NULL;
 	}
 
-	// If it is a leaf (has no children),
-	// then the whole tree is empty.
-
+	
 	else
 		new_root = NULL;
 
@@ -986,10 +974,7 @@ node * redistribute_nodes(node * root, node * n, node * neighbor, int neighbor_i
 	int i;
 	node * tmp;
 
-	/* Case: n has a neighbor to the left. 
-	 * Pull the neighbor's last key-pointer pair over
-	 * from the neighbor's right end to n's left end.
-	 */
+	
 
 	if (neighbor_index != -1) {
 		if (!n->is_leaf)
